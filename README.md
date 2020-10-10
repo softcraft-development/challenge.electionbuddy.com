@@ -10,6 +10,13 @@ No particular effort needs to be made on UI/UX as long as it's functional.
 
 You'll note that most of the basic structure (`Election`, `Question`, `Answer`, `Voter`) is in place, with existing tests passing.
 
+## Running
+
+You can run it the usual way: `bundle install`, `bundle exec rails server`, or you can use the provided Dockerfile and scripts:
+
+* `./run.sh`: Build and run, bound to localhost port 3000.
+* `./test.sh`: Build and run tests (should pass).
+
 Please fork this repository on Github and push your code up to your own fork on Github when completed. **We value your time &mdash; you do not need to finish; spend 1-1.5 hours tops.**
 
 If you have any questions, email Brady at bradyb@electionbuddy.com.
