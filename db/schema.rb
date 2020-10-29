@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20_190_205_170_919) do
     t.string 'name'
     t.datetime 'start_at'
     t.datetime 'end_at'
-    t.text 'settings'
+    if t.respond_to?(:jsonb); t.jsonb 'settings'; else; t.json 'settings' end
     t.integer 'user_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
