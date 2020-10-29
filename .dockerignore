@@ -1,4 +1,5 @@
 vendor/bundle
+db/*.sqlite3
 tmp
 log
 test.sh

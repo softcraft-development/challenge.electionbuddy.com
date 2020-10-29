@@ -1,9 +1,12 @@
 FROM ruby:2.7.1
 LABEL maintainer="bradyb@electionbuddy.com"
 
-# Install required Ubuntu packages.
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get update && \
-  apt-get install -y nodejs yarn
+  apt-get install -y nodejs build-essential
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+  apt-get update && apt-get install yarn
 
 WORKDIR /home/app
 COPY .ruby-version Gemfile Gemfile.lock /home/app/
@@ -18,6 +21,6 @@ RUN bundle config --global frozen 1 && \
   bundle config set deployment 'true' && \
   bundle install
 
-COPY . /home/app/challenge.electionbuddy.com/
+COPY . /home/app/
 
 RUN bundle exec rake assets:precompile
