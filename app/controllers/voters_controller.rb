@@ -1,7 +1,7 @@
 class VotersController < ApplicationController
-  before_action :authenticate_user!, except: [:ballot, :submit]
-  before_action :set_voter, only: [:show, :edit, :update, :destroy]
-  before_action :set_election, only: [:index, :new, :create]
+  before_action :authenticate_user!, except: %i[ballot submit]
+  before_action :set_voter, only: %i[show edit update destroy]
+  before_action :set_election, only: %i[index new create]
 
   # GET /voters
   # GET /voters.json
@@ -11,8 +11,7 @@ class VotersController < ApplicationController
 
   # GET /voters/1
   # GET /voters/1.json
-  def show
-  end
+  def show; end
 
   # GET /voters/new
   def new
@@ -20,8 +19,7 @@ class VotersController < ApplicationController
   end
 
   # GET /voters/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /voters
   # POST /voters.json
@@ -69,17 +67,18 @@ class VotersController < ApplicationController
   def submit; end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_voter
-      @voter = Voter.find(params[:id])
-    end
 
-    def set_election
-      @election = Election.find(params[:election_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_voter
+    @voter = Voter.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def voter_params
-      params.require(:voter).permit(:name, :email, :election_id)
-    end
+  def set_election
+    @election = Election.find(params[:election_id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def voter_params
+    params.require(:voter).permit(:name, :email, :election_id)
+  end
 end

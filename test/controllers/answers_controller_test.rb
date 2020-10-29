@@ -7,17 +7,17 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get question_answers_url(question_id: @question)
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_question_answer_url(question_id: @question)
     assert_response :success
   end
 
-  test "should create answer" do
+  test 'should create answer' do
     assert_difference('Answer.count') do
       post question_answers_url(question_id: @question), params: { answer: { name: @answer.name } }
     end
@@ -25,22 +25,22 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to answer_url(Answer.last)
   end
 
-  test "should show answer" do
+  test 'should show answer' do
     get answer_url(@answer)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_answer_url(@answer)
     assert_response :success
   end
 
-  test "should update answer" do
+  test 'should update answer' do
     patch answer_url(@answer), params: { answer: { name: @answer.name } }
     assert_redirected_to answer_url(@answer)
   end
 
-  test "should destroy answer" do
+  test 'should destroy answer' do
     assert_difference('Answer.count', -1) do
       delete answer_url(@answer)
     end

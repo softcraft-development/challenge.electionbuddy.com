@@ -1,6 +1,6 @@
 class ElectionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_election, only: [:show, :edit, :update, :destroy]
+  before_action :set_election, only: %i[show edit update destroy]
 
   # GET /elections
   # GET /elections.json
@@ -10,8 +10,7 @@ class ElectionsController < ApplicationController
 
   # GET /elections/1
   # GET /elections/1.json
-  def show
-  end
+  def show; end
 
   # GET /elections/new
   def new
@@ -19,8 +18,7 @@ class ElectionsController < ApplicationController
   end
 
   # GET /elections/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /elections
   # POST /elections.json
@@ -63,13 +61,14 @@ class ElectionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_election
-      @election = Election.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def election_params
-      params.require(:election).permit(:name, :start_at, :end_at, :visibility)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_election
+    @election = Election.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def election_params
+    params.require(:election).permit(:name, :start_at, :end_at, :visibility)
+  end
 end
