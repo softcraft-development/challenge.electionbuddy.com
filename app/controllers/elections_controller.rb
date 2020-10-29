@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ElectionsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_election, only: %i[show edit update destroy]

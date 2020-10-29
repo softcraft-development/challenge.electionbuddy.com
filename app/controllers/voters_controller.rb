@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VotersController < ApplicationController
   before_action :authenticate_user!, except: %i[ballot submit]
   before_action :set_voter, only: %i[show edit update destroy]

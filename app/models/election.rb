@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Election < ApplicationRecord
   has_many :questions
   belongs_to :user
