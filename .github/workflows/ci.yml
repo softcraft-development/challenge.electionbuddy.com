@@ -1,0 +1,25 @@
+name: Run CI
+
+on: [push]
+
+env:
+  BUNDLE_JOBS: 3
+  BUNDLE_RETRY: 3
+  BUNDLE_PATH: vendor/bundle
+  RAILS_ENV: test
+  CI_ENV: true
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
+
+    - name: Run tests
+      run: |
+        ./test.sh
