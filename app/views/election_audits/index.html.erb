@@ -24,6 +24,15 @@
         </td>
         <td>
           <%= "#{audit.operation.capitalize}d #{audit.target.class} #{audit.target.id}" %>
+          <% if audit.operation == 'create' %>
+            <ul>
+              <% audit.audit_changes.each do |property, change| %>
+                <li>
+                  <%= property %> set to <%= change[1] %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
           <% if audit.operation == 'update' %>
             <ul>
               <% audit.audit_changes.each do |property, change| %>
