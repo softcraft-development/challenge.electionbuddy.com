@@ -8,6 +8,10 @@ class Election < ApplicationRecord
 
   serialize :settings, Hash
 
+  def election
+    self
+  end
+
   def visibility
     settings[:visibility]
   end

@@ -23,6 +23,13 @@ module ElectionAuditable
   ])
   end
 
+  def election
+    # In Ruby, we don't have a compiler that's going to warn us when an "abstract class" is missing
+    # an abstract method, so I like to raise an exception when an implementation isn't provided.
+    # Testing should ensure that this is never called.
+    raise "#{self.class} is missing a reference to its election"
+  end
+
   def record_audit_trail
     # Note that we're not calling create!() here. If the audit creation fails, we *probably*
     # don't want to stop the execution of the app entirely. That *may not be true*; for example, we
@@ -31,7 +38,7 @@ module ElectionAuditable
     # architecture for the audits; RDBMS is the wrong platform for these cases.
     # See ElectionAudit for more discussion.
     ElectionAudit.create(
-      election: self,
+      election: election,
       user: User.current,
       audit_changes: auditable_changes
     )
