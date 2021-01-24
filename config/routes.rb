@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   resources :elections do
+    resources :audits, shallow: true, only: [:index], controller: 'election_audits'
     resources :questions, shallow: true do
       resources :answers, shallow: true
     end

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Audits For:</strong>
+  <%= @election.name %>
+</p>
+
+<div>
+  <table>
+    <% @audits.each do |audit| %>
+      <tr>
+        <td>
+          <%= audit.audit_changes %>
+        </tr>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= link_to 'Edit', edit_election_path(@election) %> |
+<%= link_to 'Questions', election_questions_path(@election) %> |
+<%= link_to 'Voters', election_voters_path(@election) %> |
+<%= link_to 'Back', election_path(@election) %>
