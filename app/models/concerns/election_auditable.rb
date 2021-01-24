@@ -38,9 +38,10 @@ module ElectionAuditable
     # architecture for the audits; RDBMS is the wrong platform for these cases.
     # See ElectionAudit for more discussion.
     ElectionAudit.create(
+      audit_changes: auditable_changes,
       election: election,
+      target: self,
       user: User.current,
-      audit_changes: auditable_changes
     )
   end
 end

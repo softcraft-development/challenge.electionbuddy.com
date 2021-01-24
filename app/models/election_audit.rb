@@ -13,5 +13,6 @@
 # However, for this challenge, saving ElectionAudit to its own table is good enough.
 class ElectionAudit < ApplicationRecord
   belongs_to :election
+  belongs_to :target, polymorphic: true
   belongs_to :user
 end
