@@ -11,6 +11,7 @@ class ElectionAuditTest < ActiveSupport::TestCase
 
     assert_equal(e, election_audit.election)
     assert_equal(e, election_audit.target)
+    assert_equal('update', election_audit.operation)
 
     test_admin = users(:test_admin)
     assert_equal(test_admin, ElectionAudit.last.user)

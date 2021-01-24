@@ -7,7 +7,9 @@ module ElectionAuditable
     # Since this is for auditing, we want to create the ElectionAudit *after* the commit,
     # ie: once we've known for sure that the DB save has occurred. If the transaction rolls back,
     # then the changes shouldn't happen, and we shouldn't record the audit.
-    after_commit :record_audit_trail
+    after_commit -> { record_audit_trail(:create) }, on: :create
+    after_commit -> { record_audit_trail(:destroy) }, on: :destroy
+    after_commit -> { record_audit_trail(:update) }, on: :update
   end
 
   def auditable_changes
@@ -30,7 +32,7 @@ module ElectionAuditable
     raise "#{self.class} is missing a reference to its election"
   end
 
-  def record_audit_trail
+  def record_audit_trail(operation)
     # Note that we're not calling create!() here. If the audit creation fails, we *probably*
     # don't want to stop the execution of the app entirely. That *may not be true*; for example, we
     # may want strict reliability and accountability in the audits (which is potentially
@@ -40,6 +42,7 @@ module ElectionAuditable
     ElectionAudit.create(
       audit_changes: auditable_changes,
       election: election,
+      operation: operation,
       target: self,
       user: User.current,
     )
