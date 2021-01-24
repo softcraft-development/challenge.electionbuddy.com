@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_203513) do
+ActiveRecord::Schema.define(version: 2021_01_24_204533) do
 
   create_table 'answers', force: :cascade do |t|
     t.string 'name'
@@ -72,6 +72,4 @@ ActiveRecord::Schema.define(version: 2021_01_24_203513) do
     t.index ['election_id'], name: 'index_voters_on_election_id'
   end
 
-  add_foreign_key 'election_audits', 'elections'
-  add_foreign_key 'election_audits', 'users'
 end
