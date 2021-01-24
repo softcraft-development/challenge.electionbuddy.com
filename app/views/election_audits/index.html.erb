@@ -27,18 +27,33 @@
           <% if audit.operation == 'create' %>
             <ul>
               <% audit.audit_changes.each do |property, change| %>
-                <li>
-                  <%= property %> set to <%= change[1] %>
-                </li>
+                <% if change[1].class == Hash %>
+                  <% change[1].each do |key, value| %>
+                    <%= key %> set to <%= value %>
+                  <% end %>
+                <% else %>
+                  <li>
+                    <%= property %> set to <%= change[1] %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           <% end %>
           <% if audit.operation == 'update' %>
             <ul>
               <% audit.audit_changes.each do |property, change| %>
-                <li>
-                  <%= property %> changed from <%= change[0] %> to <%= change[1] %>
-                </li>
+                <% if change[0].class == Hash %>
+                  <li>
+                    <% keys = (change[0].keys + change[1].keys).uniq %>
+                    <% keys.each do |key| %>
+                      <%= property %> changed from <%= change[0][key] %> to <%= change[1][key] %>
+                    <% end %>
+                  </li>
+                <% else %>
+                  <li>
+                    <%= property %> changed from <%= change[0] %> to <%= change[1] %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           <% end %>
