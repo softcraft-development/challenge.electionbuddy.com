@@ -12,13 +12,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_205_170_919) do
+ActiveRecord::Schema.define(version: 2021_01_24_203513) do
+
   create_table 'answers', force: :cascade do |t|
     t.string 'name'
     t.integer 'question_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['question_id'], name: 'index_answers_on_question_id'
+  end
+
+  create_table 'election_audits', force: :cascade do |t|
+    t.integer 'election_id', null: false
+    t.integer 'user_id', null: false
+    t.json 'audit_changes'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['election_id'], name: 'index_election_audits_on_election_id'
+    t.index ['user_id'], name: 'index_election_audits_on_user_id'
   end
 
   create_table 'elections', force: :cascade do |t|
@@ -60,4 +71,7 @@ ActiveRecord::Schema.define(version: 20_190_205_170_919) do
     t.datetime 'updated_at', null: false
     t.index ['election_id'], name: 'index_voters_on_election_id'
   end
+
+  add_foreign_key 'election_audits', 'elections'
+  add_foreign_key 'election_audits', 'users'
 end
