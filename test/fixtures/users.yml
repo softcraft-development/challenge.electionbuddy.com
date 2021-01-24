@@ -5,3 +5,6 @@ one:
 
 two:
   email: MyString2
+
+test_admin:
+  email: test.admin@example.com

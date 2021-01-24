@@ -10,6 +10,12 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    setup do
+      # ElectionAudit requires a user, so we need to make sure the current user is set
+      # during tests.
+      User.current = users(:test_admin)
+    end
   end
 end
 
