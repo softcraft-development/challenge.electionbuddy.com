@@ -3,6 +3,32 @@ require 'user'
 module ElectionAuditable
   extend ActiveSupport::Concern
 
+  # The provded test doesn't allow for changes to `updated_at`, so we need to suppress them
+  # here. This makes sense, as `updated_at` is really a metadata field that's going to be
+  # constantly updating anyway. ElectionAudit's own created_at field is really an audit_trail
+  # of the changes to Election.updated_at.
+  #
+  # created_at isn't useful to audit as it *should* be write-once anyway.
+  #
+  # Any other sensitive attributes should be in this list. We don't want any sensitive
+  # information accidentally leaked So far, that's just Devise's
+  # encrypted_password and reset_password_token. User isn't (currently) an ElectionAuditable,
+  # so strictly speaking thse attributes don't need to be blacklisted. However, it's best
+  # to include them now just so they don't get accidentally recorded in the future.
+  #
+  # If we do want to indicate that these values changed (without leaking their actual values),
+  # then we should be writing custom code to handle that.
+  #
+  # :id had better not be changing... but if it does, we definitely want to know about it.
+  # So leave it out of the blacklist.
+  #
+  DEFAULT_ATTRIBUTE_BLACKLIST = [
+    'created_at',
+    'encrypted_password',
+    'reset_password_token',
+    'updated_at',
+  ]
+
   included do
     # Since this is for auditing, we want to create the ElectionAudit *after* the commit,
     # ie: once we've known for sure that the DB save has occurred. If the transaction rolls back,
@@ -13,16 +39,9 @@ module ElectionAuditable
   end
 
   def auditable_changes
-    # The provded test doesn't allow for changes to `updated_at`, so we need to suppress them
-    # here. This makes sense, as `updated_at` is really a metadata field that's going to be
-    # constantly updating anyway. ElectionAudit's own created_at field is really an audit_trail
-    # of the changes to Election.updated_at.
-
-    # created_at isn't useful to audit as it *should* be write-once anyway.
-    self.previous_changes.except(*[
-    'created_at',
-    'updated_at',
-  ])
+    # Note: it's reasonable to whitelist specific attributes rather than try to blacklist ones.
+    # That can be done here, and overridden on a per-class basis.
+    self.previous_changes.except(*DEFAULT_ATTRIBUTE_BLACKLIST)
   end
 
   def election
