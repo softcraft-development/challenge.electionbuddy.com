@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Answer < ApplicationRecord
+  include ElectionAuditable
   belongs_to :question
 
   def election
