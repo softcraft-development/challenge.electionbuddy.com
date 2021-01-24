@@ -19,12 +19,10 @@ module ElectionAuditable
   # If we do want to indicate that these values changed (without leaking their actual values),
   # then we should be writing custom code to handle that.
   #
-  # :id had better not be changing... but if it does, we definitely want to know about it.
-  # So leave it out of the blacklist.
-  #
   DEFAULT_ATTRIBUTE_BLACKLIST = [
     'created_at',
     'encrypted_password',
+    'id',
     'reset_password_token',
     'updated_at',
   ]
