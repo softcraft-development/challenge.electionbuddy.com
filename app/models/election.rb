@@ -5,6 +5,7 @@ class Election < ApplicationRecord
   include ElectionAuditable
   has_many :questions
   belongs_to :user
+  has_many :election_audits
 
   serialize :settings, Hash
 
