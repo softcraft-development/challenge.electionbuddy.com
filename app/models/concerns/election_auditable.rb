@@ -42,12 +42,6 @@ module ElectionAuditable
     self.previous_changes.except(*DEFAULT_ATTRIBUTE_BLACKLIST)
   end
 
-  def election
-    # In Ruby, we don't have a compiler that's going to warn us when an "abstract class" is missing
-    # an abstract method, so I like to raise an exception when an implementation isn't provided.
-    # Testing should ensure that this is never called.
-    raise "#{self.class} is missing a reference to its election"
-  end
 
   def record_audit_trail(operation)
     # Note that we're not calling create!() here. If the audit creation fails, we *probably*
@@ -58,7 +52,7 @@ module ElectionAuditable
     # See ElectionAudit for more discussion.
     ElectionAudit.create(
       audit_changes: auditable_changes,
-      election: election,
+      election: self.election,
       operation: operation,
       target: self,
       user: User.current,
