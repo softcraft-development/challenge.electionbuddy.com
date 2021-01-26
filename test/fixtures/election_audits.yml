@@ -3,9 +3,17 @@
 one:
   election: one
   user: one
-  audit_changes: 
+  audit_changes:
+    settings:
+      visibility: private
+  operation: update
+  target: one (Election)
 
 two:
   election: two
   user: two
-  audit_changes: 
+  audit_changes:
+    settings:
+      visibility: public
+  operation: update
+  target: one (Question)

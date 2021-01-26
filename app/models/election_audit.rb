@@ -15,4 +15,8 @@ class ElectionAudit < ApplicationRecord
   belongs_to :election
   belongs_to :target, polymorphic: true
   belongs_to :user
+
+  validates :audit_changes, presence: true
+  validates :operation, presence: true
+  validates :target, presence: true
 end
